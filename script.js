@@ -318,9 +318,10 @@ questionMark.addEventListener(`click`, (e) => {
 closeQuestion.addEventListener(`click`, (e) => {
   helpModal.close();
 });
-
 let root = document.documentElement;
-darkMode.addEventListener(`click`, (e) => {
+let mode = localStorage.getItem(`mode`) || `light`;
+if (mode === `dark`) changeToDarkMode();
+function changeToDarkMode() {
   root.style.setProperty(`--background-color`, `var(--dark-mode)`);
   root.style.setProperty(`--header`, `var(--dark-header)`);
   root.style.setProperty(
@@ -331,8 +332,9 @@ darkMode.addEventListener(`click`, (e) => {
   darkMode.style.display = `none`;
   lightMode.style.display = `block`;
   lightMode.style.opacity = 1;
-});
-lightMode.addEventListener(`click`, (e) => {
+  localStorage.setItem(`mode`, `dark`);
+}
+function changeToLightMode() {
   root.style.setProperty(`--background-color`, `var(--light-mode)`);
   root.style.setProperty(`--header`, `var(--light-header)`);
   root.style.setProperty(
@@ -343,4 +345,7 @@ lightMode.addEventListener(`click`, (e) => {
   lightMode.style.display = `none`;
   darkMode.style.display = `block`;
   lightMode.style.opacity = 0;
-});
+  localStorage.setItem(`mode`, `light`);
+}
+darkMode.addEventListener(`click`, changeToDarkMode);
+lightMode.addEventListener(`click`, changeToLightMode);
