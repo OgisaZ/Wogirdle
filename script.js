@@ -49,7 +49,7 @@ function addListeners() {
         return;
       }
       const nextInput = e.nextElementSibling;
-      if (usedBadWords.includes(el.data)) {
+      if (usedBadWords.includes(el.data.toLowerCase())) {
         e.classList.add(`used`);
       }
       if (nextInput === null) {
@@ -136,7 +136,6 @@ function getLetters(full = false) {
     lettersArr.push(e.value);
   });
   let letters = lettersArr.map((e) => e.toLowerCase());
-  console.log(letters);
   if (letters.join(``).length !== inputs.length) {
     letters = [];
     return;
@@ -354,11 +353,19 @@ lightMode.addEventListener(`click`, changeToLightMode);
 const cheat = document.querySelectorAll(`.styling-in-help`);
 const cheatWord = document.querySelector(`.help-h1`);
 let cheatCount = 0;
-cheat[0].addEventListener(`click`, (e) => {
-  console.log(`ALOOO`);
+cheat[1].addEventListener(`click`, (e) => {
   cheatCount++;
   if (cheatCount >= 3) {
     cheatWord.innerHTML = `${finalWord}`;
     cheatCount = 0;
   }
+});
+
+const settingsModal = document.querySelector(`.settings-modal`);
+const settingsBtn = document.querySelector(`.settings`);
+settingsBtn.addEventListener(`click`, (e) => {
+  settingsModal.showModal();
+  setTimeout(() => {
+    settingsModal.close();
+  }, 1000);
 });

@@ -13,7 +13,10 @@
   </head>
   <body>
     <div class="header">
-      <h2>Wogirdle</h2>
+      <div><i class="fa-solid fa-gear settings"></i></div>
+      <div>
+        <h2>Wogirdle</h2>
+      </div>
       <div class="icons">
         <i class="fa-solid fa-question question"></i>
         <i class="fa-solid fa-moon dark-mode"></i>
@@ -24,6 +27,7 @@
       Fetching the word...
       <div class="spin"></div>
     </dialog>
+    <dialog class="settings-modal">Settings work in progress...</dialog>
     <dialog class="help-modal">
       <i class="fa-solid fa-x close"></i>
       <p class="help-h1">Desi tebrice cao u Wogirdle</p>
@@ -42,16 +46,16 @@
       <br />Ovo znaci da si slovo pogodio, ali nije na tacno mesto<br /><input
         type="text"
         class="yellow styling-in-help"
-        disabled
+        readonly="true"
       /><br />Ovo znaci da nisi pogodio slovo<br /><input
         type="text"
         class="gray styling-in-help"
-        disabled
+        readonly="true"
       /><br />A ovo ce izaci dok kuckas rec, i znaci da je to slovo vec
       iskoriceno, i nije tacno (samo gray slova)<br /><input
         type="text"
         class="used styling-in-help"
-        disabled
+        readonly="true"
       />
     </dialog>
 

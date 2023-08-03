@@ -57,9 +57,9 @@ body {
 }
 .styling {
   width: auto;
-  max-width: 5vw;
+  max-width: 4.5vw;
   height: 8vh;
-  font-size: 36px;
+  font-size: 4vh;
   text-align: center;
   /* background: var(--back-letters); */
 }
@@ -100,7 +100,8 @@ input {
   background-color: red;
   height: 40px;
   text-align: center;
-  width: 302px;
+  padding: 5px;
+  width: 20vw;
   color: rgb(255, 255, 255);
   transition: 1s;
   display: none;
@@ -120,7 +121,20 @@ input {
 .modal::backdrop {
   background-color: #b8bfc4b9;
 }
-
+.settings-modal {
+  position: absolute;
+  top: 30vh;
+  left: 46vw;
+  overflow: hidden;
+  border-radius: 10px;
+  max-height: 80%;
+  max-width: 450px;
+  padding: 10px;
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  background-color: var(--header);
+  color: var(--header-font-color);
+}
 @keyframes spinner {
   0% {
     transform: translate3d(-50%, -50%, 0) rotate(0deg);
@@ -146,7 +160,9 @@ input {
 }
 .header {
   display: flex;
-  flex-direction: column-reverse;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
   background-color: var(--header);
   color: var(--header-font-color);
   height: 8vh;
@@ -163,29 +179,24 @@ input {
   color: var(--header-font-color);
 }
 .icons {
-  position: absolute;
-  top: 5px;
-  left: 90%;
-  margin-right: 20px;
+  display: flex;
+  flex-direction: row-reverse;
   font-size: 34px;
+  margin-right: 1%;
 }
 .dark-mode {
-  position: absolute;
-  top: 2.5px;
-  left: -35px;
-  margin-right: 20px;
-  font-size: 34px;
-  z-index: 1;
-  /* display:block; */
+  display: block;
+  margin-right: 10%;
 }
 .light-mode {
-  position: absolute;
-  top: 2.5px;
-  left: -40px;
-  margin-right: 20px;
-  font-size: 34px;
   display: none;
   opacity: 0;
+  margin-right: 10%;
+}
+.settings {
+  display: block;
+  font-size: 34px;
+  margin-left: 40%;
 }
 .help-modal {
   position: absolute;
