@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Victor+Mono:ital,wght@1,300&display=swap");
+:root {
+  --light-mode: rgb(243, 226, 226);
+  --light-header: rgb(209, 193, 193);
+  --light-header-font-color: black;
+  --light-wrong: rgb(107, 98, 98);
+  --light-back-letters: rgb(255, 255, 255);
+  --light-shadow: rgb(124, 114, 114);
+  --light-used: rgb(47, 87, 119);
+
+  --dark-mode: rgb(44, 44, 44);
+  --dark-header: rgb(68, 68, 68);
+  --dark-header-font-color: rgb(255, 255, 255);
+  --dark-shadow: rgb(46, 46, 46);
+
+  --background-color: var(--light-mode);
+  --header: var(--light-header);
+  --wrong: var(--light-wrong);
+  --back-letters: var(--light-back-letters);
+  --shadow: var(--light-shadow);
+  --used: var(--light-used);
+  --header-font-color: var(--light-header-font-color);
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: var(--background-color);
+}
+.hidden {
+  display: none;
+}
+.yellow {
+  background-color: yellow;
+}
+.green {
+  background-color: greenyellow;
+}
+.gray {
+  background-color: var(--wrong);
+  color: var(--header-font-color);
+}
+.used {
+  background-color: var(--used);
+}
+.default {
+  background-color: white;
+}
+.styling {
+  width: 70px;
+  height: 80px;
+  font-size: 36px;
+  text-align: center;
+  /* background: var(--back-letters); */
+}
+.again-div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  display: none;
+}
+.again {
+  width: 200px;
+  max-width: 250px;
+  font-family: "Victor Mono", monospace;
+}
+input {
+  font-family: "Raleway", sans-serif;
+}
+.div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 5px;
+}
+.fail {
+  position: absolute;
+  border: 2px solid black;
+  top: 50%;
+  left: 40%;
+  border-radius: 5px;
+  background-color: red;
+  height: 40px;
+  text-align: center;
+  width: 302px;
+  color: rgb(255, 255, 255);
+  transition: 1s;
+  display: none;
+  opacity: 0;
+}
+.modal {
+  position: absolute;
+  top: 30vh;
+  left: 46vw;
+  overflow: hidden;
+  border-radius: 10px;
+  height: 20%;
+  font-family: "Raleway", sans-serif;
+  background-color: var(--header);
+  color: var(--header-font-color);
+}
+.modal::backdrop {
+  background-color: #b8bfc4b9;
+}
+
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+.spin::before {
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #1c87c9;
+  border-radius: 50%;
+  content: "";
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}
+.header {
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: var(--header);
+  color: var(--header-font-color);
+  height: 8vh;
+  text-align: center;
+  font-family: "Raleway", sans-serif;
+  padding-bottom: 5px;
+  margin-bottom: 10vh;
+  box-shadow: 10px 10px 5px var(--shadow);
+}
+.definition {
+  max-width: 500px;
+  font-size: 16px;
+  font-family: "Lora", serif;
+  color: var(--dark-header-font-color);
+}
+.icons {
+  position: absolute;
+  top: 5px;
+  left: 98%;
+  margin-right: 20px;
+  font-size: 34px;
+}
+.dark-mode {
+  position: absolute;
+  top: 2.5px;
+  left: -35px;
+  margin-right: 20px;
+  font-size: 34px;
+  z-index: 1;
+  /* display:block; */
+}
+.light-mode {
+  position: absolute;
+  top: 2.5px;
+  left: -40px;
+  margin-right: 20px;
+  font-size: 34px;
+  display: none;
+  opacity: 0;
+}
+.help-modal {
+  position: absolute;
+  top: calc(30vh - 100px);
+  left: calc(44vw - 142px);
+  overflow: hidden;
+  border-radius: 10px;
+  max-height: 80%;
+  max-width: 450px;
+  padding: 10px;
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  background-color: var(--header);
+  color: var(--header-font-color);
+}
+
+.help-modal::backdrop {
+  background-color: #b8bfc4b9;
+}
+.styling-in-help {
+  width: 50px;
+  height: 50px;
+  font-size: 36px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.close {
+  position: absolute;
+  left: 10px;
+  cursor: pointer;
+}
+i {
+  cursor: pointer;
+}
+.guesses {
+  color: var(--header-font-color);
+  font-family: "Raleway", sans-serif;
+}

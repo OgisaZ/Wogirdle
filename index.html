@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wordle!</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/67438984d3.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <h2>Wogirdle</h2>
+      <div class="icons">
+        <i class="fa-solid fa-question question"></i>
+        <i class="fa-solid fa-moon dark-mode"></i>
+        <i class="fa-regular fa-sun light-mode" style="color: #e8e8e8"></i>
+      </div>
+    </div>
+    <dialog class="modal">
+      Fetching the word...
+      <div class="spin"></div>
+    </dialog>
+    <dialog class="help-modal">
+      <i class="fa-solid fa-x close"></i>Desi tebrice cao u Wogirdle<br />
+      <hr />
+      Kada ste napisali 5 slova, samo pretisnite enter i igra ce proveriti da li
+      je to validna rec. (Samo Engleski).<br /><br />
+      Naci ima jedna misteriozna rec koju trebas da pogodis tako sto kuckas i
+      ako ti inputi ovako izgledaju onda:
+      <hr />
+      <br />Ovo znaci da si slovo pogodio na tacno mesto<br /><input
+        type="text"
+        class="green styling-in-help"
+        disabled
+      />
+      <br />Ovo znaci da si slovo pogodio, ali nije na tacno mesto<br /><input
+        type="text"
+        class="yellow styling-in-help"
+        disabled
+      /><br />Ovo znaci da nisi pogodio slovo<br /><input
+        type="text"
+        class="gray styling-in-help"
+        disabled
+      /><br />A ovo ce izaci dok kuckas rec, i znaci da je to slovo vec
+      iskoriceno, i nije tacno (samo gray slova)<br /><input
+        type="text"
+        class="used styling-in-help"
+        disabled
+      />
+    </dialog>
+
+    <div class="div">
+      <span class="guesses"
+        >Guesses left: <span class="guesses-left"></span
+      ></span>
+      <div class="playing-div">
+        <input
+          type="text"
+          maxlength="1"
+          class="input hidden styling"
+          value=""
+        />
+        <input
+          type="text"
+          maxlength="1"
+          class="input hidden styling"
+          value=""
+        />
+        <input
+          type="text"
+          maxlength="1"
+          class="input hidden styling"
+          value=""
+        />
+        <input
+          type="text"
+          maxlength="1"
+          class="input hidden styling"
+          value=""
+        />
+        <input
+          type="text"
+          maxlength="1"
+          class="input hidden styling"
+          value=""
+        />
+      </div>
+    </div>
+
+    <div>
+      <span class="fail">Can't find word in words list.</span>
+    </div>
+    <div class="again-div">
+      <button class="again">Again</button>
+    </div>
+  </body>
+</html>
