@@ -48,7 +48,6 @@ function addListeners() {
         e.value = ``;
         return;
       }
-      console.log(`Hello!!!`);
       const nextInput = e.nextElementSibling;
       if (usedBadWords.includes(el.data)) {
         e.classList.add(`used`);
@@ -132,12 +131,12 @@ async function getRandomWord() {
 getRandomWord();
 
 function getLetters(full = false) {
-  let letters = [];
-  console.log(inputs);
+  let lettersArr = [];
   inputs.forEach((e) => {
-    letters.push(e.value);
+    lettersArr.push(e.value);
   });
-
+  let letters = lettersArr.map((e) => e.toLowerCase());
+  console.log(letters);
   if (letters.join(``).length !== inputs.length) {
     letters = [];
     return;
@@ -193,7 +192,6 @@ function findColorPositions() {
   let greenPositions = [];
   let grayPositions = [];
   // For greens
-  console.log(letters);
   letters.forEach((e, i, a) => {
     // Ako postoji to slovo u final rec, nadji gde se nalazi, i ako je na isto mesto gde si ti stavio onda je zeleno, stavi ga u array za zelenilo i izbaci iz kopije gde se gleda da ne moze na isto mesto da budu dva zelena
     if (!finalArrayCopy.includes(e)) return;
@@ -236,7 +234,6 @@ function findColorPositions() {
 let timeout;
 
 async function isWordReal(word, goMore = true) {
-  console.log(word);
   try {
     const dictionaryAPI = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
