@@ -50,6 +50,11 @@ body {
 .default {
   background-color: white;
 }
+@media (max-width: 1000px) {
+  .styling {
+    width: 10vw;
+  }
+}
 .styling {
   width: auto;
   max-width: 5vw;
@@ -75,9 +80,9 @@ body {
 input {
   font-family: "Raleway", sans-serif;
 }
-input[type="text"] {
+/* input[type="text"] {
   text-transform: lowercase;
-}
+} */
 .div {
   display: flex;
   justify-content: center;

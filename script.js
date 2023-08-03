@@ -164,8 +164,11 @@ function getLetters(full = false) {
     i++;
     return;
   }
-  if (!full) return letters;
-  else return letters.join(``);
+  const lettersLower = letters.map((e) => {
+    return e.toLowerCase();
+  });
+  if (!full) return lettersLower;
+  else return letters.join(``).toLowerCase();
 }
 
 function checkIfGotWord() {
@@ -233,6 +236,7 @@ function findColorPositions() {
 let timeout;
 
 async function isWordReal(word, goMore = true) {
+  console.log(word);
   try {
     const dictionaryAPI = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
@@ -351,7 +355,6 @@ darkMode.addEventListener(`click`, changeToDarkMode);
 lightMode.addEventListener(`click`, changeToLightMode);
 
 const cheat = document.querySelectorAll(`.styling-in-help`);
-console.log(cheat[0]);
 const cheatWord = document.querySelector(`.help-h1`);
 let cheatCount = 0;
 cheat[0].addEventListener(`click`, (e) => {
