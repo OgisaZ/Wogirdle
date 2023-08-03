@@ -51,8 +51,9 @@ body {
   background-color: white;
 }
 .styling {
-  width: 70px;
-  height: 80px;
+  width: 4vw;
+  min-width: 4vw;
+  height: 8vh;
   font-size: 36px;
   text-align: center;
   /* background: var(--back-letters); */
@@ -156,7 +157,7 @@ input {
 .icons {
   position: absolute;
   top: 5px;
-  left: 98%;
+  left: 90%;
   margin-right: 20px;
   font-size: 34px;
 }

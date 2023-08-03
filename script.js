@@ -159,7 +159,7 @@ function getLetters(full = false) {
     inputs.forEach((e) => (e.disabled = `true`));
     againDiv.insertAdjacentHTML(
       `afterbegin`,
-      `<span class="definition">You Lost! Dumbass demn.</span>`
+      `<span class="definition">You Lost! The word was ${finalWord}.</span>`
     );
     i++;
     return;
@@ -349,3 +349,16 @@ function changeToLightMode() {
 }
 darkMode.addEventListener(`click`, changeToDarkMode);
 lightMode.addEventListener(`click`, changeToLightMode);
+
+const cheat = document.querySelectorAll(`.styling-in-help`);
+console.log(cheat[0]);
+const cheatWord = document.querySelector(`.help-h1`);
+let cheatCount = 0;
+cheat[0].addEventListener(`click`, (e) => {
+  console.log(`ALOOO`);
+  cheatCount++;
+  if (cheatCount >= 3) {
+    cheatWord.innerHTML = `${finalWord}`;
+    cheatCount = 0;
+  }
+});
