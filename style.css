@@ -51,8 +51,8 @@ body {
   background-color: white;
 }
 .styling {
-  width: 4vw;
-  min-width: 4vw;
+  width: auto;
+  max-width: 5vw;
   height: 8vh;
   font-size: 36px;
   text-align: center;
@@ -74,6 +74,9 @@ body {
 }
 input {
   font-family: "Raleway", sans-serif;
+}
+input[type="text"] {
+  text-transform: lowercase;
 }
 .div {
   display: flex;
