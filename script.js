@@ -35,6 +35,7 @@ function disableAll() {
     e.value = ``;
   });
   inputs[0].focus();
+  playingDiv.nextElementSibling.remove();
   playingDiv.insertAdjacentHTML(`beforebegin`, `${htmlString}</div>`);
   playingDiv.insertAdjacentHTML(`beforebegin`, `<br>`);
 }
@@ -259,7 +260,7 @@ async function isWordReal(word, goMore = true) {
   }
 }
 document.querySelector(`.again`).addEventListener(`click`, (e) => {
-  div.innerHTML = `<span>Guesses left: <span class="guesses-left"></span></span><div class="playing-div">
+  div.innerHTML = `<span class="guesses">Guesses left: <span class="guesses-left"></span></span><div class="playing-div">
     <input
       type="text"
       maxlength="1"
@@ -291,7 +292,53 @@ document.querySelector(`.again`).addEventListener(`click`, (e) => {
       value=""
     />
     `;
-
+  for (let i = 0; i <= 5; i++) {
+    div.insertAdjacentHTML(
+      `beforeend`,
+      `<div>
+    <input
+      type="text"
+      maxlength="1"
+      class="styling"
+      value=""
+      disabled
+      style="margin-top: 10px"
+    />
+    <input
+      type="text"
+      maxlength="1"
+      class="styling"
+      value=""
+      disabled
+      style="margin-top: 10px"
+    />
+    <input
+      type="text"
+      maxlength="1"
+      class="styling"
+      value=""
+      disabled
+      style="margin-top: 10px"
+    />
+    <input
+      type="text"
+      maxlength="1"
+      class="styling"
+      value=""
+      disabled
+      style="margin-top: 10px"
+    />
+    <input
+      type="text"
+      maxlength="1"
+      class="styling"
+      value=""
+      disabled
+      style="margin-top: 10px"
+    />
+  </div>`
+    );
+  }
   inputs.forEach((e) => {
     e.classList.remove(`input`);
   });
@@ -305,6 +352,7 @@ document.querySelector(`.again`).addEventListener(`click`, (e) => {
   guessesLeft = document.querySelector(`.guesses-left`);
   guesses = 5;
   guessesLeft.innerHTML = guesses + 1;
+  usedGoodWords = [];
   usedBadWords = [];
 });
 const helpModal = document.querySelector(`.help-modal`);

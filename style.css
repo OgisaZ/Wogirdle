@@ -52,13 +52,14 @@ body {
 }
 @media (max-width: 1000px) {
   .styling {
-    width: 10vw;
+    max-width: 200px;
   }
 }
 .styling {
-  width: auto;
-  max-width: 4.5vw;
-  height: 8vh;
+  width: 4vw;
+  max-width: 60px;
+  height: 6vh;
+  max-height: 70px;
   font-size: 4vh;
   text-align: center;
   /* background: var(--back-letters); */
