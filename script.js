@@ -6,6 +6,7 @@ let playingDiv = document.querySelector(`.playing-div`);
 const againDiv = document.querySelector(`.again-div`);
 const modal = document.querySelector(`.modal`);
 let guessesLeft = document.querySelector(`.guesses-left`);
+const hardModeCheckBox = document.querySelector(`.checkbox-hard`);
 let usedBadWords = [];
 let usedGoodWords = [];
 let finalWord;
@@ -173,6 +174,7 @@ function getLetters(full = false) {
 function checkIfGotWord() {
   const { grayPositions, yellowPositions, greenPositions } =
     findColorPositions();
+
   grayPositions.forEach((e) => {
     e.classList.add(`gray`);
   });
@@ -188,6 +190,12 @@ function findColorPositions() {
   const letters = getLetters(false);
   const finalWordArray = finalWord[0].split(``);
   const finalArrayCopy = finalWordArray.slice();
+  if (hardModeCheckBox.checked) {
+    usedGoodWords.forEach((e) => {
+      if (!letters.includes(e)) throw new Error(`Hard mode`);
+    });
+  }
+
   let yellowPositions = [];
   let greenPositions = [];
   let grayPositions = [];
@@ -239,6 +247,8 @@ async function isWordReal(word, goMore = true) {
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
     );
     const dictionary = await dictionaryAPI.json();
+    if (dictionary.title === `No Definitions Found`)
+      throw new Error(`Can't find word in words list.`);
     const definition = dictionary[0].meanings[0].definitions[0].definition;
     if (goMore) {
       checkIfGotWord();
@@ -251,6 +261,7 @@ async function isWordReal(word, goMore = true) {
     clearTimeout(timeout);
     fail.style.opacity = 1;
     fail.style.display = `block`;
+    fail.textContent = err.message;
     timeout = setTimeout(() => {
       fail.style.opacity = 0;
       fail.style.display = `none`;
@@ -292,7 +303,7 @@ document.querySelector(`.again`).addEventListener(`click`, (e) => {
       value=""
     />
     `;
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 4; i++) {
     div.insertAdjacentHTML(
       `beforeend`,
       `<div>
@@ -356,15 +367,17 @@ document.querySelector(`.again`).addEventListener(`click`, (e) => {
   usedBadWords = [];
 });
 const helpModal = document.querySelector(`.help-modal`);
-const closeQuestion = document.querySelector(`.close`);
+const closeQuestion = document.querySelectorAll(`.close`);
 const questionMark = document.querySelector(`.question`);
 const darkMode = document.querySelector(`.dark-mode`);
 const lightMode = document.querySelector(`.light-mode`);
 questionMark.addEventListener(`click`, (e) => {
   helpModal.showModal();
 });
-closeQuestion.addEventListener(`click`, (e) => {
-  helpModal.close();
+closeQuestion.forEach((e) => {
+  e.addEventListener(`click`, (e) => {
+    e.target.parentElement.close();
+  });
 });
 let root = document.documentElement;
 let mode = localStorage.getItem(`mode`) || `light`;
@@ -413,7 +426,7 @@ const settingsModal = document.querySelector(`.settings-modal`);
 const settingsBtn = document.querySelector(`.settings`);
 settingsBtn.addEventListener(`click`, (e) => {
   settingsModal.showModal();
-  setTimeout(() => {
-    settingsModal.close();
-  }, 1000);
 });
+// window.addEventListener(`resize`, (e) => {
+//   document.querySelector(`.styling`).style.width = `10vw`;
+// });

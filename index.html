@@ -19,15 +19,31 @@
       </div>
       <div class="icons">
         <i class="fa-solid fa-question question"></i>
-        <i class="fa-solid fa-moon dark-mode"></i>
-        <i class="fa-regular fa-sun light-mode" style="color: #e8e8e8"></i>
       </div>
     </div>
     <dialog class="modal">
       Fetching the word...
       <div class="spin"></div>
     </dialog>
-    <dialog class="settings-modal">Settings work in progress...</dialog>
+    <dialog class="settings-modal">
+      <i class="fa-solid fa-x close"></i><br /><br />
+      <div class="settings-icons">
+        <i class="fa-solid fa-moon dark-mode"></i>
+        <i class="fa-regular fa-sun light-mode" style="color: #e8e8e8"></i>
+      </div>
+      <div class="settings-div">
+        Hard Mode<label class="switch">
+          <input type="checkbox" class="checkbox-hard" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <br />
+      <hr />
+      <br />
+      <div class="settings-div">
+        Ogi :)<a href="https://github.com/OgisaZ" target="_blank">LINK</a>
+      </div>
+    </dialog>
     <dialog class="help-modal">
       <i class="fa-solid fa-x close"></i>
       <p class="help-h1">Desi tebrice cao u Wogirdle</p>
@@ -308,7 +324,7 @@
     </div>
 
     <div>
-      <span class="fail">Can't find word in words list.</span>
+      <span class="fail"></span>
     </div>
     <div class="again-div">
       <button class="again">Again</button>
