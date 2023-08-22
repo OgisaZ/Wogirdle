@@ -74,17 +74,23 @@ class Model {
     const { grayPositions, yellowPositions, greenPositions } =
       this.findColorPositions(false);
     grayPositions.forEach((e) => {
-      const findIt = document.querySelectorAll(`[data-key~="${e.value}"]`);
+      const findIt = document.querySelectorAll(
+        `[data-key~="${e.value.toLowerCase()}"]`
+      );
       findIt[0].style.backgroundColor = `var(--used)`;
     });
     yellowPositions.forEach((e) => {
-      const findIt = document.querySelectorAll(`[data-key~="${e.value}"]`);
+      const findIt = document.querySelectorAll(
+        `[data-key~="${e.value.toLowerCase()}"]`
+      );
       if (findIt[0].style.backgroundColor === `greenyellow`) return;
       findIt[0].style.backgroundColor = `yellow`;
       findIt[0].style.color = `black`;
     });
     greenPositions.forEach((e) => {
-      const findIt = document.querySelectorAll(`[data-key~="${e.value}"]`);
+      const findIt = document.querySelectorAll(
+        `[data-key~="${e.value.toLowerCase()}"]`
+      );
       findIt[0].style.backgroundColor = `greenyellow`;
       findIt[0].style.color = `black`;
     });
@@ -237,6 +243,7 @@ class Model {
       clearTimeout(this.timeout);
       fail.style.opacity = 1;
       fail.style.display = `block`;
+      console.log(err);
       fail.textContent = err.message;
       this.timeout = setTimeout(() => {
         fail.style.opacity = 0;
