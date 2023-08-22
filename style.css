@@ -68,6 +68,7 @@ body {
   padding: 15px;
   margin-bottom: 2px;
   margin-left: 3px;
+  user-select: none;
 }
 .fail {
   position: absolute;

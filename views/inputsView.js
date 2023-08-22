@@ -20,7 +20,6 @@ class InputsView {
       e.classList.remove(`used`);
       e.value = ``;
     });
-    inputs[0].focus();
     let guessesLeft = document.querySelector(`.guesses-left`);
 
     if (playingDiv.nextElementSibling !== null)

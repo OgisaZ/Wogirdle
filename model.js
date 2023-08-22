@@ -67,7 +67,7 @@ class Model {
       }
     });
     if (key === `enter`) {
-      this.enterEventListener();
+      this.enterEventListener(`keyboard`);
     }
   }
   updateKeyboard() {
@@ -121,21 +121,23 @@ class Model {
         key.length === 1 &&
         nextInput.value === 0
       ) {
-        nextInput.focus();
         if (!keyboard) nextInput.value = key;
         if (usedBadWords.includes(key)) {
-          if (!keyboard) nextInput.classList.add(`used`);
-          else targetElement.classList.add(`used`);
+          if (!keyboard) {
+            nextInput.classList.add(`used`);
+            nextInput.focus();
+          } else targetElement.classList.add(`used`);
         }
       }
       // Ako nema nista sledece onda vrati se, a ako ima, i ako si fokusiran na polje gde vec ima slovo, ako pretisnes slovo onda ce te fokusira na sledece polje i napisace tu sta si sad pretisnuo!!!
       if (nextInput === null) return;
       if (targetElement.value.length === 1 && key.length === 1) {
         if (!keyboard) nextInput.value = key;
-        nextInput.focus();
         if (usedBadWords.includes(key)) {
-          if (!keyboard) nextInput.classList.add(`used`);
-          else targetElement.classList.add(`used`);
+          if (!keyboard) {
+            nextInput.classList.add(`used`);
+            nextInput.focus();
+          } else targetElement.classList.add(`used`);
         }
       }
     }
@@ -166,10 +168,10 @@ class Model {
     });
   }
 
-  enterEventListener() {
+  enterEventListener(keyboard = false) {
     const lastInput = inputs[inputs.length - 1];
     if (lastInput.value === ``) return;
-    this.isWordReal(this.getLetters(true), true);
+    this.isWordReal(this.getLetters(true), true, keyboard ? `keyboard` : false);
   }
 
   getLetters(full = false) {
@@ -214,7 +216,7 @@ class Model {
     else return letters.join(``).toLowerCase();
   }
 
-  async isWordReal(word, goMore = false) {
+  async isWordReal(word, goMore = false, keyboard = false) {
     try {
       const dictionaryAPI = await fetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
@@ -228,6 +230,7 @@ class Model {
         inputCaller();
         this.gameState.guesses--;
         guessesLeft.innerHTML = this.gameState.guesses + 1;
+        if (!keyboard) inputs[0].focus();
       } else return true;
     } catch (err) {
       const fail = document.querySelector(`.fail`);
