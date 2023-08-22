@@ -58,6 +58,7 @@ body {
   max-height: 70px;
   font-size: 4vh;
   text-align: center;
+  caret-color: transparent;
   /* background: var(--back-letters); */
 }
 .key {

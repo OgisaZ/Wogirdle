@@ -32,7 +32,6 @@ class Model {
     usedBadWords = [];
     const keysHTML = document.querySelectorAll(`.key`);
     keysHTML.forEach((e) => {
-      console.log(e);
       e.style.backgroundColor = `var(--header)`;
       e.style.color = `var(--header-font-color)`;
     });
@@ -95,6 +94,7 @@ class Model {
       findIt[0].style.color = `black`;
     });
   }
+
   keyPressAny(e, keyboard = false) {
     let targetElement = e.target;
     let key = e.key;
@@ -108,7 +108,6 @@ class Model {
 
     if (key === `Backspace`) {
       const previousInput = targetElement.previousElementSibling;
-      console.log(`here`);
       targetElement.classList.remove(`used`);
       if (previousInput === null) {
         // Ako ne postoji vise, tjst ako si na prvi ondak return i nista ne radi sa taj backspace
@@ -121,6 +120,7 @@ class Model {
       // Ako je nesto sto nije backspace
 
       // Ako je valid onda pisi
+
       if (
         targetElement.value.length >= 1 &&
         nextInput !== null &&
@@ -135,10 +135,14 @@ class Model {
           } else targetElement.classList.add(`used`);
         }
       }
+
       // Ako nema nista sledece onda vrati se, a ako ima, i ako si fokusiran na polje gde vec ima slovo, ako pretisnes slovo onda ce te fokusira na sledece polje i napisace tu sta si sad pretisnuo!!!
       if (nextInput === null) return;
       if (targetElement.value.length === 1 && key.length === 1) {
-        if (!keyboard) nextInput.value = key;
+        if (!keyboard) {
+          nextInput.value = key;
+          nextInput.focus();
+        }
         if (usedBadWords.includes(key)) {
           if (!keyboard) {
             nextInput.classList.add(`used`);
