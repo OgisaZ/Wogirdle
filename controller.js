@@ -7,6 +7,7 @@ import inputsView from "./views/inputsView.js";
 import { GUESSES } from "./config.js";
 import helpView from "./views/helpView.js";
 import settingsView from "./views/settingsView.js";
+import keyboardView from "./views/keyboardView.js";
 const modal = document.querySelector(`.modal`);
 
 function init() {
@@ -16,7 +17,7 @@ function init() {
   model.addListeners();
   listenersView.addEnterHandler(model.enterEventListener, model);
   listenersView.addAgainHandler();
-
+  keyboardView.addKeyboardListener();
   helpView.addHelpListeners();
   settingsView.addSettingsListeners();
   //   model.enterEventListener();
@@ -30,6 +31,9 @@ export function callControllerAgain() {
 
   let guessesLeft = document.querySelector(`.guesses-left`);
   guessesLeft.innerHTML = GUESSES + 1;
+}
+export function pressedKeyboard(key) {
+  model.pressedKeyboardModel(key);
 }
 const cheat = document.querySelectorAll(`.styling-in-help`);
 const cheatWord = document.querySelector(`.help-h1`);

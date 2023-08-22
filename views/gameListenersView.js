@@ -1,5 +1,5 @@
 "use strict";
-import { div } from "../definitions.js";
+import { div } from "../declarations.js";
 import { callControllerAgain } from "../controller.js";
 class GameListenersView {
   addEnterHandler(handler, modelThis) {

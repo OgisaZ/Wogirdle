@@ -50,11 +50,7 @@ body {
 .default {
   background-color: white;
 }
-@media (max-width: 1000px) {
-  .styling {
-    max-width: 200px;
-  }
-}
+
 .styling {
   width: 4vw;
   max-width: 60px;
@@ -64,6 +60,55 @@ body {
   text-align: center;
   /* background: var(--back-letters); */
 }
+.key {
+  font-family: "Raleway", sans-serif;
+  border: 1px solid var(--header-font-color);
+  color: var(--header-font-color);
+  background-color: var(--header);
+  padding: 15px;
+  margin-bottom: 2px;
+  margin-left: 3px;
+}
+.fail {
+  position: absolute;
+  border: 2px solid black;
+  top: 50%;
+  left: 40%;
+  border-radius: 5px;
+  background-color: red;
+  height: 40px;
+  text-align: center;
+  padding: 5px;
+  width: 20vw;
+  color: rgb(255, 255, 255);
+  transition: 1s;
+  display: none;
+  opacity: 0;
+}
+.keyboard {
+  display: flex;
+  justify-content: space-evenly;
+  width: 20vw;
+  text-align: center;
+}
+.settings-modal {
+  position: absolute;
+  top: 30vh;
+  left: calc(46vw - 10%);
+  overflow: hidden;
+  border-radius: 10px;
+  max-height: 80%;
+  width: 30%;
+  max-width: 450px;
+  /* margin-top: 0px; */
+  padding: 10px;
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  background-color: var(--header);
+  color: var(--header-font-color);
+  /* font-size: 1.05vw; */
+}
+
 .again-div {
   display: flex;
   justify-content: center;
@@ -92,22 +137,7 @@ input {
   align-content: center;
   padding: 5px;
 }
-.fail {
-  position: absolute;
-  border: 2px solid black;
-  top: 50%;
-  left: 40%;
-  border-radius: 5px;
-  background-color: red;
-  height: 40px;
-  text-align: center;
-  padding: 5px;
-  width: 20vw;
-  color: rgb(255, 255, 255);
-  transition: 1s;
-  display: none;
-  opacity: 0;
-}
+
 .modal {
   position: absolute;
   top: 30vh;
@@ -122,23 +152,7 @@ input {
 .modal::backdrop {
   background-color: #b8bfc4b9;
 }
-.settings-modal {
-  position: absolute;
-  top: 30vh;
-  left: calc(46vw - 10%);
-  overflow: hidden;
-  border-radius: 10px;
-  max-height: 80%;
-  width: 30%;
-  max-width: 450px;
-  /* margin-top: 0px; */
-  padding: 10px;
-  font-family: "Raleway", sans-serif;
-  text-align: center;
-  background-color: var(--header);
-  color: var(--header-font-color);
-  /* font-size: 1.05vw; */
-}
+
 a {
   color: var(--header-font-color);
 }
@@ -192,7 +206,7 @@ a {
   display: flex;
   flex-direction: row-reverse;
   font-size: 34px;
-  /* margin-right: 1%; */
+  margin-right: 1%;
 }
 .dark-mode {
   display: block;
@@ -326,4 +340,89 @@ input:checked + .slider:before {
   align-items: center;
   font-size: 34px;
   margin-left: 10%;
+}
+@media (max-width: 600px) {
+  .styling {
+    width: 10vw;
+    max-width: 200px;
+    height: 6vh;
+    max-height: 70px;
+    font-size: 4vh;
+    text-align: center;
+  }
+  .key {
+    font-family: "Raleway", sans-serif;
+    border: 1px solid var(--header-font-color);
+    color: var(--header-font-color);
+    background-color: var(--header);
+    padding: 8px;
+    margin-bottom: 2px;
+    /* margin-left: 3px; */
+  }
+  .keyboard {
+    display: flex;
+    justify-content: space-evenly;
+    width: 45vw;
+    text-align: center;
+  }
+  .fail {
+    position: absolute;
+    border: 2px solid black;
+    top: 30%;
+    left: 35%;
+    border-radius: 5px;
+    background-color: red;
+    height: 10vh;
+    text-align: center;
+    padding: 5px;
+    width: 30vw;
+    color: rgb(255, 255, 255);
+    transition: 1s;
+    display: none;
+    opacity: 0;
+  }
+  .settings-modal {
+    width: 70%;
+    left: calc(35vw - 20%);
+  }
+  .modal {
+    position: absolute;
+    top: 30vh;
+    left: 30vw;
+    overflow: hidden;
+    border-radius: 10px;
+    height: 20%;
+    font-family: "Raleway", sans-serif;
+    background-color: var(--header);
+    color: var(--header-font-color);
+  }
+}
+.container-keyboard {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-top: 15px;
+}
+.rotate {
+  display: none;
+}
+@media (max-height: 600px) {
+  .styling {
+    width: 7vw;
+    max-width: 200px;
+    height: 8vh;
+    max-height: 70px;
+    font-size: 6vh;
+    text-align: center;
+  }
+  .container-keyboard {
+    display: none;
+  }
+  .rotate {
+    display: flex;
+    justify-content: center;
+    font-family: "Raleway", sans-serif;
+  }
 }

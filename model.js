@@ -1,13 +1,14 @@
 "use strict";
 export let inputs = document.querySelectorAll(`.input`);
-import { hardModeCheckBox } from "./definitions.js";
-import { againDiv } from "./definitions.js";
-import { guessesLeft } from "./definitions.js";
+import { hardModeCheckBox } from "./declarations.js";
+import { againDiv } from "./declarations.js";
+import { guessesLeft } from "./declarations.js";
 import { inputCaller } from "./controller.js";
 import { GUESSES } from "./config.js";
 let i = 0;
 let usedGoodWords = [];
 let usedBadWords = [];
+let aaa = 0;
 const modal = document.querySelector(`.modal`);
 class Model {
   gameState = {
@@ -29,6 +30,115 @@ class Model {
     this.gameState.guesses = 5;
     usedGoodWords = [];
     usedBadWords = [];
+    const keysHTML = document.querySelectorAll(`.key`);
+    keysHTML.forEach((e) => {
+      console.log(e);
+      e.style.backgroundColor = `var(--header)`;
+      e.style.color = `var(--header-font-color)`;
+    });
+  }
+
+  pressedKeyboardModel(key) {
+    let shouldStop = false;
+    inputs.forEach((e) => {
+      if (shouldStop) return;
+      if (
+        key === `back` &&
+        (e.value === `` || inputs[inputs.length - 1].value)
+      ) {
+        if (inputs[inputs.length - 1].value) {
+          inputs[inputs.length - 1].value = ``;
+          inputs[inputs.length - 1].classList.remove(`used`);
+        } else {
+          e.previousElementSibling.value = ``;
+          e.previousElementSibling.classList.remove(`used`);
+        }
+        shouldStop = true;
+      }
+
+      if (e.value === `` && key.length === 1) {
+        e.value = key;
+
+        this.keyPressAny(e, key);
+        if (usedBadWords.includes(key)) {
+          e.classList.add(`used`);
+        }
+        shouldStop = true;
+      }
+    });
+    if (key === `enter`) {
+      this.enterEventListener();
+    }
+  }
+  updateKeyboard() {
+    const { grayPositions, yellowPositions, greenPositions } =
+      this.findColorPositions(false);
+    grayPositions.forEach((e) => {
+      const findIt = document.querySelectorAll(`[data-key~="${e.value}"]`);
+      findIt[0].style.backgroundColor = `var(--used)`;
+    });
+    yellowPositions.forEach((e) => {
+      const findIt = document.querySelectorAll(`[data-key~="${e.value}"]`);
+      if (findIt[0].style.backgroundColor === `greenyellow`) return;
+      findIt[0].style.backgroundColor = `yellow`;
+      findIt[0].style.color = `black`;
+    });
+    greenPositions.forEach((e) => {
+      const findIt = document.querySelectorAll(`[data-key~="${e.value}"]`);
+      findIt[0].style.backgroundColor = `greenyellow`;
+      findIt[0].style.color = `black`;
+    });
+  }
+  keyPressAny(e, keyboard = false) {
+    let targetElement = e.target;
+    let key = e.key;
+    if (!e.key) {
+      targetElement = e;
+      key = keyboard;
+    }
+    const nextInput = targetElement.nextElementSibling;
+    if (key === ` `) return;
+    // Ako pretisnes backspace
+
+    if (key === `Backspace`) {
+      const previousInput = targetElement.previousElementSibling;
+      console.log(`here`);
+      targetElement.classList.remove(`used`);
+      if (previousInput === null) {
+        // Ako ne postoji vise, tjst ako si na prvi ondak return i nista ne radi sa taj backspace
+        return;
+      }
+      // Ako ima slovo ispred, onda nemoj da menjas fokus na previous, ako nema ispred slovo onda izbrisi i stavi fokus na prethodni input
+      if (nextInput?.value === `` || nextInput === null) previousInput.focus();
+      // Ako je sve ok onda fokusiraj prethodni field
+    } else {
+      // Ako je nesto sto nije backspace
+
+      // Ako je valid onda pisi
+      if (
+        targetElement.value.length >= 1 &&
+        nextInput !== null &&
+        key.length === 1 &&
+        nextInput.value === 0
+      ) {
+        nextInput.focus();
+        if (!keyboard) nextInput.value = key;
+        if (usedBadWords.includes(key)) {
+          if (!keyboard) nextInput.classList.add(`used`);
+          else targetElement.classList.add(`used`);
+        }
+      }
+      // Ako nema nista sledece onda vrati se, a ako ima, i ako si fokusiran na polje gde vec ima slovo, ako pretisnes slovo onda ce te fokusira na sledece polje i napisace tu sta si sad pretisnuo!!!
+      if (nextInput === null) return;
+      if (targetElement.value.length === 1 && key.length === 1) {
+        if (!keyboard) nextInput.value = key;
+        nextInput.focus();
+        if (usedBadWords.includes(key)) {
+          if (!keyboard) nextInput.classList.add(`used`);
+          else targetElement.classList.add(`used`);
+        }
+      }
+    }
   }
   addListeners() {
     inputs.forEach((e, a) => {
@@ -51,47 +161,7 @@ class Model {
         nextInput.focus();
       });
       e.addEventListener(`keyup`, (e) => {
-        const nextInput = e.target.nextElementSibling;
-        if (e.key === ` `) return;
-        // Ako pretisnes backspace
-        if (e.key === `Backspace`) {
-          const previousInput = e.target.previousElementSibling;
-          e.target.classList.remove(`used`);
-          if (previousInput === null) {
-            // Ako ne postoji vise, tjst ako si na prvi ondak return i nista ne radi sa taj backspace
-            return;
-          }
-
-          // Ako ima slovo ispred, onda nemoj da menjas fokus na previous, ako nema ispred slovo onda izbrisi i stavi fokus na prethodni input
-          if (nextInput?.value === `` || nextInput === null)
-            previousInput.focus();
-          // Ako je sve ok onda fokusiraj prethodni field
-        } else {
-          // Ako je nesto sto nije backspace
-
-          // Ako je valid onda pisi
-          if (
-            e.target.value.length >= 1 &&
-            nextInput !== null &&
-            e.key.length === 1 &&
-            nextInput.value === 0
-          ) {
-            nextInput.focus();
-            nextInput.value = e.key;
-            if (usedBadWords.includes(e.key)) {
-              nextInput.classList.add(`used`);
-            }
-          }
-          // Ako nema nista sledece onda vrati se, a ako ima, i ako si fokusiran na polje gde vec ima slovo, ako pretisnes slovo onda ce te fokusira na sledece polje i napisace tu sta si sad pretisnuo!!!
-          if (nextInput === null) return;
-          if (e.target.value.length === 1 && e.key.length === 1) {
-            nextInput.value = e.key;
-            nextInput.focus();
-            if (usedBadWords.includes(e.key)) {
-              nextInput.classList.add(`used`);
-            }
-          }
-        }
+        this.keyPressAny(e);
       });
     });
   }
@@ -104,15 +174,16 @@ class Model {
 
   getLetters(full = false) {
     let lettersArr = [];
+
     inputs.forEach((e) => {
       lettersArr.push(e.value);
     });
+
     let letters = lettersArr.map((e) => e.toLowerCase());
     if (letters.join(``).length !== inputs.length) {
       letters = [];
       return;
     }
-
     if (letters.join(``) === this.gameState.finalWord[0] && i === 0) {
       // You win
       againDiv.style.display = `flex`;
@@ -134,9 +205,11 @@ class Model {
       i++;
       return;
     }
+
     const lettersLower = letters.map((e) => {
       return e.toLowerCase();
     });
+
     if (!full) return lettersLower;
     else return letters.join(``).toLowerCase();
   }
@@ -184,13 +257,12 @@ class Model {
       e.classList.add(`green`);
     });
   }
-  findColorPositions() {
+  findColorPositions(keyboard = true) {
     // Proveri da li je svaki input pun
     const letters = this.getLetters(false);
     const finalWordArray = this.gameState.finalWord[0].split(``);
     const finalArrayCopy = finalWordArray.slice();
     if (hardModeCheckBox.checked) {
-      console.log(usedGoodWords);
       usedGoodWords.forEach((e) => {
         if (!letters.includes(e)) throw new Error(`Hard mode`);
       });
@@ -236,7 +308,7 @@ class Model {
         arr[i] = ``;
       }
     });
-
+    if (keyboard) this.updateKeyboard();
     return { grayPositions, yellowPositions, greenPositions };
   }
   async getRandomWord() {
@@ -247,6 +319,7 @@ class Model {
       );
       const json = await word.json();
       this.gameState.finalWord = json;
+
       const dictionaryAPI = await fetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${this.gameState.finalWord}`
       );
