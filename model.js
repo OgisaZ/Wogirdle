@@ -221,15 +221,15 @@ class Model {
     try {
       if (won)
         navigator.clipboard.writeText(
-          `I guessed the word ${this.gameState.finalWord} in ${
+          `I guessed the word *${this.gameState.finalWord}* in ${
             GUESSES + 1 - guessesLeft.textContent
           } tries.\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
         );
       if (!won)
         navigator.clipboard.writeText(
-          `I didn't guess the word ${
+          `I didn't guess the word *${
             this.gameState.finalWord
-          }. I mean it was absurd!\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
+          }*. I mean it was absurd!\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
         );
       finishText.textContent = `Copied to clipboard!`;
     } catch (err) {
