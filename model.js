@@ -9,7 +9,13 @@ let i = 0;
 let usedGoodWords = [];
 let usedBadWords = [];
 let aaa = 0;
+let stringify = ``;
 const modal = document.querySelector(`.modal`);
+const finishModal = document.querySelector(`.finish-modal`);
+const finishEmojisHTML = document.querySelector(`.finish-emojis`);
+const finishText = document.querySelector(`.finish-text`);
+const finishButtonDiv = document.querySelector(`.finish-div`);
+let won = true;
 class Model {
   gameState = {
     finalWord: `house`,
@@ -35,6 +41,9 @@ class Model {
       e.style.backgroundColor = `var(--header)`;
       e.style.color = `var(--header-font-color)`;
     });
+    stringify = ``;
+    finishButtonDiv.style.display = `none`;
+    finishModal.close();
   }
 
   pressedKeyboardModel(key) {
@@ -183,7 +192,87 @@ class Model {
     if (lastInput.value === ``) return;
     this.isWordReal(this.getLetters(true), true, keyboard ? `keyboard` : false);
   }
+  stringifyColors() {
+    inputs.forEach((e) => {
+      stringify += `${e.classList[e.classList.length - 1]}`;
+    });
+    stringify += `\n`;
+    return stringify;
+  }
+  makeColorToEmojis() {
+    const emojiString = stringify
+      .replaceAll(`gray`, `⬛`)
+      .replaceAll(`yellow`, `🟨`)
+      .replaceAll(`green`, `🟩`)
+      .trim();
 
+    return emojiString;
+  }
+  makeFinalModalContents() {
+    const emojis = this.makeColorToEmojis();
+    finishEmojisHTML.textContent = emojis;
+    if (won)
+      finishText.textContent = `You guessed the word in ${
+        GUESSES + 1 - (guessesLeft.textContent - 1)
+      } tries.`;
+    if (!won) finishText.textContent = `You didn't guess the word`;
+  }
+  copyEventListener() {
+    try {
+      if (won)
+        navigator.clipboard.writeText(
+          `I guessed the word ${this.gameState.finalWord} in ${
+            GUESSES + 1 - guessesLeft.textContent
+          } tries.\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
+        );
+      if (!won)
+        navigator.clipboard.writeText(
+          `I didn't guess the word ${
+            this.gameState.finalWord
+          }. I mean it was absurd!\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
+        );
+      finishText.textContent = `Copied to clipboard!`;
+    } catch (err) {
+      alert(`Couldn't copy to clipboard.`);
+      console.log(err);
+    }
+  }
+  checkIfWin() {
+    const letters = this.getLetters();
+
+    if (letters.join(``) === this.gameState.finalWord[0] && i === 0) {
+      // You win
+      won = true;
+      finishModal.showModal();
+      finishButtonDiv.style.display = `flex`;
+      againDiv.style.display = `flex`;
+      inputs.forEach((e) => (e.disabled = `true`));
+      againDiv.insertAdjacentHTML(
+        `afterbegin`,
+        `<span class="definition">${this.gameState.finalWord}: ${this.gameState.definition}</span>`
+      );
+      i++;
+      return true;
+    }
+    return false;
+  }
+  checkIfLoser() {
+    if (this.gameState.guesses <= 0 && i === 0) {
+      won = false;
+      this.makeFinalModalContents();
+      finishModal.showModal();
+      againDiv.style.display = `flex`;
+      inputs.forEach((e) => (e.disabled = `true`));
+
+      againDiv.insertAdjacentHTML(
+        `afterbegin`,
+        `<span class="definition">You Lost! The word was ${this.gameState.finalWord}.<br> ${this.gameState.definition}</span>`
+      );
+      i++;
+      return true;
+    }
+    return false;
+  }
   getLetters(full = false) {
     let lettersArr = [];
 
@@ -194,27 +283,6 @@ class Model {
     let letters = lettersArr.map((e) => e.toLowerCase());
     if (letters.join(``).length !== inputs.length) {
       letters = [];
-      return;
-    }
-    if (letters.join(``) === this.gameState.finalWord[0] && i === 0) {
-      // You win
-      againDiv.style.display = `flex`;
-      inputs.forEach((e) => (e.disabled = `true`));
-      againDiv.insertAdjacentHTML(
-        `afterbegin`,
-        `<span class="definition">${this.gameState.finalWord}: ${this.gameState.definition}</span>`
-      );
-      i++;
-    }
-    // You lose :(
-    if (this.gameState.guesses <= 0 && i === 0) {
-      againDiv.style.display = `flex`;
-      inputs.forEach((e) => (e.disabled = `true`));
-      againDiv.insertAdjacentHTML(
-        `afterbegin`,
-        `<span class="definition">You Lost! The word was ${this.gameState.finalWord}.</span>`
-      );
-      i++;
       return;
     }
 
@@ -270,10 +338,16 @@ class Model {
     greenPositions.forEach((e) => {
       e.classList.add(`green`);
     });
+    this.stringifyColors();
+    if (this.checkIfWin) this.makeFinalModalContents();
   }
   findColorPositions(keyboard = true) {
     // Proveri da li je svaki input pun
     const letters = this.getLetters(false);
+    this.checkIfWin();
+    // You lose :(
+    this.checkIfLoser();
+
     const finalWordArray = this.gameState.finalWord[0].split(``);
     const finalArrayCopy = finalWordArray.slice();
     if (hardModeCheckBox.checked) {
@@ -323,6 +397,7 @@ class Model {
       }
     });
     if (keyboard) this.updateKeyboard();
+
     return { grayPositions, yellowPositions, greenPositions };
   }
   async getRandomWord() {
@@ -333,7 +408,7 @@ class Model {
       );
       const json = await word.json();
       this.gameState.finalWord = json;
-
+      if (this.gameState.finalWord === `yo-yo`) this.getRandomWord();
       const dictionaryAPI = await fetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${this.gameState.finalWord}`
       );
@@ -351,4 +426,5 @@ class Model {
     }
   }
 }
+
 export default new Model();

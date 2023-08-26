@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wordle!</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="style.css" />
     <script
       src="https://kit.fontawesome.com/67438984d3.js"
@@ -323,12 +324,21 @@
         />
       </div>
     </div>
-
     <div>
       <span class="fail"></span>
     </div>
-    <div class="again-div">
-      <button class="again">Again</button>
+
+    <dialog class="finish-modal">
+      <i class="fa-solid fa-x close"></i>
+      <span class="finish-text">Great Job!</span><br /><br />
+      <pre class="finish-emojis"></pre>
+      <br /><button class="finish-copy">Copy</button><br /><br />
+      <div class="again-div">
+        <button class="again">Again</button>
+      </div>
+    </dialog>
+    <div class="finish-div">
+      <button class="finish">Finish</button>
     </div>
     <div class="container-keyboard">
       <div class="keyboard">

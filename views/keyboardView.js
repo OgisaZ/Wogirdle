@@ -5,7 +5,10 @@ import { pressedKeyboard } from "../controller.js";
 class keyboardView {
   addKeyboardListener() {
     const containerKeyboard = document.querySelector(`.container-keyboard`);
+    const inputs = document.querySelector(`.input`);
     containerKeyboard.addEventListener(`click`, (e) => {
+      console.log(inputs);
+      if (inputs.disabled) return;
       if (
         !e.target.parentElement.classList.contains(`key`) &&
         !e.target.classList.contains(`key`)

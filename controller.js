@@ -17,6 +17,8 @@ function init() {
   model.addListeners();
   listenersView.addEnterHandler(model.enterEventListener, model);
   listenersView.addAgainHandler();
+  listenersView.addCopyHandler(model.copyEventListener, model);
+  listenersView.addFinishHandler();
   keyboardView.addKeyboardListener();
   helpView.addHelpListeners();
   settingsView.addSettingsListeners();
