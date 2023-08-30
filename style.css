@@ -59,6 +59,7 @@ body {
   font-size: 4vh;
   text-align: center;
   caret-color: transparent;
+
   /* background: var(--back-letters); */
 }
 .key {
@@ -66,7 +67,7 @@ body {
   border: 1px solid var(--header-font-color);
   color: var(--header-font-color);
   background-color: var(--header);
-  padding: 15px;
+  padding: 17px;
   margin-bottom: 2px;
   margin-left: 3px;
   user-select: none;
@@ -129,11 +130,17 @@ body {
   background-color: var(--header);
   color: var(--header-font-color);
   /* font-size: 1.05vw; */
+  opacity: 0;
+  transition: opacity 2s;
 }
-.finish-copy {
+.finish-copy,
+.again {
   width: 6vw;
   /* max-width: 250px; */
-  font-family: "Victor Mono", monospace;
+  font-size: 2vw;
+  background-color: transparent;
+  border-color: transparent;
+  /* font-family: "Victor Mono", monospace; */
 }
 .again-div,
 .finish-div {
@@ -143,6 +150,7 @@ body {
   flex-wrap: wrap;
   align-content: center;
   align-items: center;
+  /* overflow: scroll; */
 }
 .finish-div {
   display: none;
@@ -386,7 +394,7 @@ input:checked + .slider:before {
     border: 1px solid var(--header-font-color);
     color: var(--header-font-color);
     background-color: var(--header);
-    padding: 8px;
+    padding: 10.5px;
     margin-bottom: 2px;
     /* margin-left: 3px; */
   }
@@ -428,14 +436,23 @@ input:checked + .slider:before {
     color: var(--header-font-color);
   }
   .finish-emojis {
-    font-size: 4vw;
+    font-size: 5vw;
   }
-  .finish-copy {
+  .finish-copy,
+  .again {
     width: 15vw;
+    font-size: 10vw;
   }
   .again,
   .finish {
     width: 25vw;
+  }
+  .finish-modal {
+    left: 5%;
+    width: 80vw;
+  }
+  .help-modal {
+    left: 0;
   }
 }
 .container-keyboard {
@@ -465,5 +482,26 @@ input:checked + .slider:before {
     display: flex;
     justify-content: center;
     font-family: "Raleway", sans-serif;
+  }
+}
+.flip {
+  animation: flip 500ms ease forwards;
+}
+.fa-github {
+  font-size: 25px;
+}
+@keyframes flip {
+  0% {
+    background: white;
+    transform: scaleY(1);
+  }
+
+  50% {
+    background: white;
+    transform: scaleY(0);
+  }
+
+  100% {
+    transform: scaleY(1);
   }
 }

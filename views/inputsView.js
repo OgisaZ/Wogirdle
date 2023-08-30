@@ -6,7 +6,7 @@ class InputsView {
     let playingDiv = document.querySelector(`.playing-div`);
     let inputs = document.querySelectorAll(`.input`);
     if (i >= 1) return;
-    let htmlString = `<div>`;
+    let htmlString = `<div class="previous">`;
     inputs.forEach((e) => {
       htmlString = `${htmlString} <input type="text" maxlength="1" value="${
         e.value

@@ -44,6 +44,7 @@ class Model {
     stringify = ``;
     finishButtonDiv.style.display = `none`;
     finishModal.close();
+    finishModal.style.opacity = 0;
   }
 
   pressedKeyboardModel(key) {
@@ -243,7 +244,10 @@ class Model {
     if (letters.join(``) === this.gameState.finalWord[0] && i === 0) {
       // You win
       won = true;
-      finishModal.showModal();
+      setTimeout(() => {
+        finishModal.showModal();
+        finishModal.style.opacity = 1;
+      }, 1000);
       finishButtonDiv.style.display = `flex`;
       againDiv.style.display = `flex`;
       inputs.forEach((e) => (e.disabled = `true`));
@@ -259,8 +263,13 @@ class Model {
   checkIfLoser() {
     if (this.gameState.guesses <= 0 && i === 0) {
       won = false;
-      this.makeFinalModalContents();
-      finishModal.showModal();
+      // this.makeFinalModalContents();
+      setTimeout(() => {
+        finishModal.showModal();
+        finishModal.style.opacity = 1;
+      }, 1000);
+
+      finishButtonDiv.style.display = `flex`;
       againDiv.style.display = `flex`;
       inputs.forEach((e) => (e.disabled = `true`));
 
@@ -293,6 +302,18 @@ class Model {
     if (!full) return lettersLower;
     else return letters.join(``).toLowerCase();
   }
+  flippingAnimation() {
+    const previousInputs =
+      document.querySelectorAll(`.previous`)[
+        document.querySelectorAll(`.previous`).length - 1
+      ].children;
+    const arr = [].slice.call(previousInputs);
+    console.log(arr);
+    arr.forEach(function (tile, i) {
+      tile.classList.add("flip");
+      // tile.style.animationDelay = `${i * 100}ms`;
+    });
+  }
 
   async isWordReal(word, goMore = false, keyboard = false) {
     try {
@@ -306,6 +327,8 @@ class Model {
       if (goMore) {
         this.checkIfGotWord();
         inputCaller();
+        this.flippingAnimation();
+
         this.gameState.guesses--;
         guessesLeft.innerHTML = this.gameState.guesses + 1;
         if (!keyboard) inputs[0].focus();
@@ -328,14 +351,13 @@ class Model {
   checkIfGotWord() {
     const { grayPositions, yellowPositions, greenPositions } =
       this.findColorPositions();
-
-    grayPositions.forEach((e) => {
+    grayPositions.forEach((e, i) => {
       e.classList.add(`gray`);
     });
     yellowPositions.forEach((e) => {
       e.classList.add(`yellow`);
     });
-    greenPositions.forEach((e) => {
+    greenPositions.forEach((e, i) => {
       e.classList.add(`green`);
     });
     this.stringifyColors();

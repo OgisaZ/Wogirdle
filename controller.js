@@ -9,7 +9,6 @@ import helpView from "./views/helpView.js";
 import settingsView from "./views/settingsView.js";
 import keyboardView from "./views/keyboardView.js";
 const modal = document.querySelector(`.modal`);
-
 function init() {
   let guessesLeft = document.querySelector(`.guesses-left`);
   guessesLeft.innerHTML = GUESSES + 1;
