@@ -2,7 +2,6 @@
 export let inputs = document.querySelectorAll(`.input`);
 import { hardModeCheckBox } from "./declarations.js";
 import { againDiv } from "./declarations.js";
-// import { guessesLeft } from "./declarations.js";
 import { inputCaller } from "./controller.js";
 import { GUESSES } from "./config.js";
 let i = 0;
@@ -300,7 +299,6 @@ class Model {
     let lettersString = letters.join(``).toLowerCase();
     // Invalid inputs
     letters.forEach((e) => {
-      console.log(this.gameState.bannedSymbols.includes(e));
       if (this.gameState.bannedSymbols.includes(e)) {
         this.showFail(`Not valid input.`);
         throw new Error(`Not valid input.`);
@@ -344,7 +342,6 @@ class Model {
         let doubleLetters = false;
         time = 5000;
         let lettersSet = new Set(Array.from(...this.gameState.finalWord));
-        console.log(lettersSet.size);
         if (lettersSet.size < 5) doubleLetters = true;
         message = `Definition: ${this.gameState.definition}<br> ${
           doubleLetters
@@ -365,10 +362,8 @@ class Model {
         document.querySelectorAll(`.previous`).length - 1
       ].children;
     const arr = [].slice.call(previousInputs);
-    console.log(arr);
     arr.forEach(function (tile, i) {
       tile.classList.add("flip");
-      // tile.style.animationDelay = `${i * 100}ms`;
     });
   }
   showFail(message, time = 1000) {
@@ -385,7 +380,6 @@ class Model {
 
   async isWordReal(word, goMore = false, keyboard = false) {
     try {
-      console.log(word);
       const dictionaryAPI = await fetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
       );
@@ -399,7 +393,6 @@ class Model {
         this.flippingAnimation();
 
         this.gameState.guesses--;
-        // guessesLeft.innerHTML = this.gameState.guesses + 1;
         if (!keyboard) inputs[0].focus();
       } else return true;
     } catch (err) {

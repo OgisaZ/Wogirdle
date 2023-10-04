@@ -1,6 +1,5 @@
 "use strict";
 let i = 0;
-// import model from "../model";
 class InputsView {
   disableAll(guesses) {
     let playingDiv = document.querySelector(`.playing-div`);
@@ -20,7 +19,6 @@ class InputsView {
       e.classList.remove(`used`);
       e.value = ``;
     });
-    // let guessesLeft = document.querySelector(`.guesses-left`);
     console.log(guesses);
     if (playingDiv.nextElementSibling !== null)
       playingDiv.nextElementSibling.remove();
