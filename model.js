@@ -335,7 +335,7 @@ class Model {
         message = `The king himself. Pali siege.`;
         break;
       case `fajni`:
-        message = `<img class="fit-fajni" src="./node_modules/fajni.png">`;
+        message = `<img class="fit-fajni" src="./src/fajni.png">`;
         time = 4000;
         break;
       case `hinty`:
