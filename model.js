@@ -2,7 +2,7 @@
 export let inputs = document.querySelectorAll(`.input`);
 import { hardModeCheckBox } from "./declarations.js";
 import { againDiv } from "./declarations.js";
-import { guessesLeft } from "./declarations.js";
+// import { guessesLeft } from "./declarations.js";
 import { inputCaller } from "./controller.js";
 import { GUESSES } from "./config.js";
 let i = 0;
@@ -21,6 +21,9 @@ class Model {
     finalWord: `house`,
     definition: `No definition found`,
     guesses: GUESSES,
+    bannedSymbols: [`/`, ``, `?`, `%`],
+    secretWords: [`ogisa`, `kuzma`, `maden`, `stefi`, `fajni`, `hinty`],
+    usedHint: false,
   };
   timeout;
   resetAll() {
@@ -34,6 +37,7 @@ class Model {
     document.querySelector(`.again`).previousElementSibling.outerHTML = ``;
     againDiv.style.display = `none`;
     this.gameState.guesses = 5;
+    this.gameState.usedHint = false;
     usedGoodWords = [];
     usedBadWords = [];
     const keysHTML = document.querySelectorAll(`.key`);
@@ -214,8 +218,8 @@ class Model {
     finishEmojisHTML.textContent = emojis;
     if (won)
       finishText.textContent = `You guessed the word in ${
-        GUESSES + 1 - (guessesLeft.textContent - 1)
-      } tries.`;
+        GUESSES + 1 - this.gameState.guesses
+      } tries. ${this.gameState.usedHint ? `But you used a hint.` : ``}`;
     if (!won) finishText.textContent = `You didn't guess the word`;
   }
   copyEventListener() {
@@ -223,14 +227,18 @@ class Model {
       if (won)
         navigator.clipboard.writeText(
           `I guessed the word *${this.gameState.finalWord}* in ${
-            GUESSES + 1 - guessesLeft.textContent
-          } tries.\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
+            GUESSES - this.gameState.guesses
+          } tries. ${
+            this.gameState.usedHint ? `But I used a hint.` : ``
+          }\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
         );
       if (!won)
         navigator.clipboard.writeText(
           `I didn't guess the word *${
             this.gameState.finalWord
-          }*. I mean it was absurd!\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
+          }*. I mean it was absurd!${
+            this.gameState.usedHint ? `Even with a hint!` : ``
+          }\n${this.makeColorToEmojis()}\nhttps://ogisaz.github.io/Wogirdle/`
         );
       finishText.textContent = `Copied to clipboard!`;
     } catch (err) {
@@ -253,7 +261,7 @@ class Model {
       inputs.forEach((e) => (e.disabled = `true`));
       againDiv.insertAdjacentHTML(
         `afterbegin`,
-        `<span class="definition">${this.gameState.finalWord}: ${this.gameState.definition}</span>`
+        `<span class="definition"><strong>${this.gameState.finalWord}</strong>: ${this.gameState.definition}</span>`
       );
       i++;
       return true;
@@ -288,8 +296,16 @@ class Model {
     inputs.forEach((e) => {
       lettersArr.push(e.value);
     });
-
     let letters = lettersArr.map((e) => e.toLowerCase());
+    let lettersString = letters.join(``).toLowerCase();
+    // Invalid inputs
+    letters.forEach((e) => {
+      console.log(this.gameState.bannedSymbols.includes(e));
+      if (this.gameState.bannedSymbols.includes(e)) {
+        this.showFail(`Not valid input.`);
+        throw new Error(`Not valid input.`);
+      }
+    });
     if (letters.join(``).length !== inputs.length) {
       letters = [];
       return;
@@ -300,7 +316,48 @@ class Model {
     });
 
     if (!full) return lettersLower;
-    else return letters.join(``).toLowerCase();
+    else return lettersString;
+  }
+  checkSecretInputs(word) {
+    // secretWords: [`ogisa`, `kuzma`,`maden`,`stefi`,`fajni`,`hinty`],
+    let message,
+      time = 2500;
+    switch (word) {
+      case `ogisa`:
+        message = `Hey that's me!`;
+
+        break;
+      case `kuzma`:
+        message = `Tipican kuzma npc play. E de si olivera aj cuti nekad a?`;
+        break;
+      case `maden`:
+        message = `E madene e madene gde si madene. Opicen u glavu Enough These Fa`;
+        break;
+      case `stefi`:
+        message = `The king himself. Pali siege.`;
+        break;
+      case `fajni`:
+        message = `<img class="fit-fajni" src="./node_modules/fajni.png">`;
+        time = 4000;
+        break;
+      case `hinty`:
+        let doubleLetters = false;
+        time = 5000;
+        let lettersSet = new Set(Array.from(...this.gameState.finalWord));
+        console.log(lettersSet.size);
+        if (lettersSet.size < 5) doubleLetters = true;
+        message = `Definition: ${this.gameState.definition}<br> ${
+          doubleLetters
+            ? `<br>There are repeating letters`
+            : `<br>There are no repeating letters`
+        }`;
+        this.gameState.usedHint = true;
+        break;
+
+      default:
+        break;
+    }
+    this.showFail(message, time);
   }
   flippingAnimation() {
     const previousInputs =
@@ -314,9 +371,21 @@ class Model {
       // tile.style.animationDelay = `${i * 100}ms`;
     });
   }
+  showFail(message, time = 1000) {
+    const fail = document.querySelector(`.fail`);
+    clearTimeout(this.timeout);
+    fail.style.opacity = 1;
+    fail.style.display = `block`;
+    fail.innerHTML = message;
+    this.timeout = setTimeout(() => {
+      fail.style.opacity = 0;
+      fail.style.display = `none`;
+    }, time);
+  }
 
   async isWordReal(word, goMore = false, keyboard = false) {
     try {
+      console.log(word);
       const dictionaryAPI = await fetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
       );
@@ -330,20 +399,15 @@ class Model {
         this.flippingAnimation();
 
         this.gameState.guesses--;
-        guessesLeft.innerHTML = this.gameState.guesses + 1;
+        // guessesLeft.innerHTML = this.gameState.guesses + 1;
         if (!keyboard) inputs[0].focus();
       } else return true;
     } catch (err) {
-      const fail = document.querySelector(`.fail`);
-      clearTimeout(this.timeout);
-      fail.style.opacity = 1;
-      fail.style.display = `block`;
-      console.log(err);
-      fail.textContent = err.message;
-      this.timeout = setTimeout(() => {
-        fail.style.opacity = 0;
-        fail.style.display = `none`;
-      }, 1000);
+      console.log(err.message);
+      this.showFail(err.message);
+      if (this.gameState.secretWords.includes(word)) {
+        this.checkSecretInputs(word);
+      }
       return false;
     }
   }

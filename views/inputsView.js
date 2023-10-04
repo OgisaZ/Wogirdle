@@ -1,8 +1,8 @@
 "use strict";
 let i = 0;
-
+// import model from "../model";
 class InputsView {
-  disableAll() {
+  disableAll(guesses) {
     let playingDiv = document.querySelector(`.playing-div`);
     let inputs = document.querySelectorAll(`.input`);
     if (i >= 1) return;
@@ -20,13 +20,13 @@ class InputsView {
       e.classList.remove(`used`);
       e.value = ``;
     });
-    let guessesLeft = document.querySelector(`.guesses-left`);
-
+    // let guessesLeft = document.querySelector(`.guesses-left`);
+    console.log(guesses);
     if (playingDiv.nextElementSibling !== null)
       playingDiv.nextElementSibling.remove();
     playingDiv.insertAdjacentHTML(`beforebegin`, `${htmlString}</div>`);
     playingDiv.insertAdjacentHTML(`beforebegin`, `<br>`);
-    if (guessesLeft.textContent === `1`) playingDiv.remove();
+    if (!guesses) playingDiv.remove();
   }
 }
 export default new InputsView();

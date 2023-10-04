@@ -22,35 +22,35 @@ class GameListenersView {
   }
   addAgainHandler() {
     document.querySelector(`.again`).addEventListener(`click`, (e) => {
-      div.innerHTML = `<span class="guesses">Guesses left: <span class="guesses-left"></span></span><div class="playing-div">
+      div.innerHTML = `<div class="playing-div">
         <input
           type="text"
           maxlength="1"
-          class="input hidden styling"
+          class="input styling"
           value=""
         />
         <input
           type="text"
           maxlength="1"
-          class="input hidden styling"
+          class="input styling"
           value=""
         />
         <input
           type="text"
           maxlength="1"
-          class="input hidden styling"
+          class="input styling"
           value=""
         />
         <input
           type="text"
           maxlength="1"
-          class="input hidden styling"
+          class="input styling"
           value=""
         />
         <input
           type="text"
           maxlength="1"
-          class="input hidden styling"
+          class="input styling"
           value=""
         />
         `;

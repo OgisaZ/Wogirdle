@@ -10,8 +10,8 @@ import settingsView from "./views/settingsView.js";
 import keyboardView from "./views/keyboardView.js";
 const modal = document.querySelector(`.modal`);
 function init() {
-  let guessesLeft = document.querySelector(`.guesses-left`);
-  guessesLeft.innerHTML = GUESSES + 1;
+  // let guessesLeft = document.querySelector(`.guesses-left`);
+  // guessesLeft.innerHTML = GUESSES + 1;
   model.getRandomWord();
   model.addListeners();
   listenersView.addEnterHandler(model.enterEventListener, model);
@@ -25,13 +25,13 @@ function init() {
 }
 init();
 export function inputCaller() {
-  inputsView.disableAll();
+  inputsView.disableAll(model.gameState.guesses);
 }
 export function callControllerAgain() {
   model.resetAll();
 
-  let guessesLeft = document.querySelector(`.guesses-left`);
-  guessesLeft.innerHTML = GUESSES + 1;
+  // let guessesLeft = document.querySelector(`.guesses-left`);
+  // guessesLeft.innerHTML = GUESSES + 1;
 }
 export function pressedKeyboard(key) {
   model.pressedKeyboardModel(key);

@@ -71,6 +71,13 @@ body {
   margin-bottom: 2px;
   margin-left: 3px;
   user-select: none;
+  box-shadow: 0 3px #999;
+}
+.key:active {
+  /* background-color: #6e3737; */
+  box-shadow: 0 1px #666;
+  /* z-index: -1; */
+  transform: translateY(2px);
 }
 .fail {
   position: absolute;
@@ -79,7 +86,8 @@ body {
   left: 40%;
   border-radius: 5px;
   background-color: red;
-  height: 40px;
+  min-height: 40px;
+  height: auto;
   text-align: center;
   padding: 5px;
   width: 20vw;
@@ -165,6 +173,12 @@ body {
 input {
   font-family: "Raleway", sans-serif;
 }
+.font {
+  font-family: "Raleway", sans-serif;
+}
+.fit-fajni {
+  width: 10vw;
+}
 /* input[type="text"] {
   text-transform: lowercase;
 } */
@@ -233,7 +247,7 @@ a {
   font-family: "Raleway", sans-serif;
   padding-bottom: 5px;
   margin-bottom: 10vh;
-  box-shadow: 10px 10px 5px var(--shadow);
+  box-shadow: 0px 10px 5px var(--shadow);
 }
 .definition {
   max-width: 500px;
@@ -419,6 +433,7 @@ input:checked + .slider:before {
     transition: 1s;
     display: none;
     opacity: 0;
+    font-family: "Raleway", sans-serif;
   }
   .settings-modal {
     width: 70%;
