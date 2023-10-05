@@ -200,6 +200,7 @@ input {
   width: 50vw;
   transform: translateX(50%);
   text-align: center;
+  color: var(--header-font-color);
 }
 
 .modal {
