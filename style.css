@@ -176,7 +176,7 @@ input {
 .font {
   font-family: "Raleway", sans-serif;
 }
-.fit-fajni {
+.fit-pic {
   width: 10vw;
 }
 /* input[type="text"] {
@@ -189,6 +189,17 @@ input {
   flex-wrap: wrap;
   align-content: center;
   padding: 5px;
+}
+.hint {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  font-family: "Raleway", sans-serif;
+  width: 50vw;
+  transform: translateX(50%);
+  text-align: center;
 }
 
 .modal {
@@ -395,6 +406,9 @@ input:checked + .slider:before {
   margin-left: 10%;
 }
 @media (max-width: 600px) {
+  .fit-pic {
+    width: 25vw;
+  }
   .styling {
     width: 10vw;
     max-width: 200px;
@@ -419,13 +433,12 @@ input:checked + .slider:before {
     text-align: center;
   }
   .fail {
-    position: absolute;
+    /* position: absolute;
     border: 2px solid black;
     top: 30%;
-    left: 35%;
+    
     border-radius: 5px;
     background-color: red;
-    height: 10vh;
     text-align: center;
     padding: 5px;
     width: 30vw;
@@ -433,7 +446,12 @@ input:checked + .slider:before {
     transition: 1s;
     display: none;
     opacity: 0;
-    font-family: "Raleway", sans-serif;
+    font-family: "Raleway", sans-serif; */
+    /* left: 20%; */
+    left: 0;
+    transform: translateX(45%);
+    min-height: 10vh;
+    min-width: 50vw;
   }
   .settings-modal {
     width: 70%;

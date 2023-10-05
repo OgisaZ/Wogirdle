@@ -21,7 +21,16 @@ class Model {
     definition: `No definition found`,
     guesses: GUESSES,
     bannedSymbols: [`/`, ``, `?`, `%`],
-    secretWords: [`ogisa`, `kuzma`, `maden`, `stefi`, `fajni`, `hinty`],
+    secretWords: [
+      `ogisa`,
+      `kuzma`,
+      `maden`,
+      `stefi`,
+      `fajni`,
+      `hinty`,
+      `gojko`,
+      `niger`,
+    ],
     usedHint: false,
   };
   timeout;
@@ -34,6 +43,7 @@ class Model {
     this.getRandomWord();
     i = 0;
     document.querySelector(`.again`).previousElementSibling.outerHTML = ``;
+    document.querySelector(`.hint`).innerHTML = ``;
     againDiv.style.display = `none`;
     this.gameState.guesses = 5;
     this.gameState.usedHint = false;
@@ -317,7 +327,6 @@ class Model {
     else return lettersString;
   }
   checkSecretInputs(word) {
-    // secretWords: [`ogisa`, `kuzma`,`maden`,`stefi`,`fajni`,`hinty`],
     let message,
       time = 2500;
     switch (word) {
@@ -335,12 +344,12 @@ class Model {
         message = `The king himself. Pali siege.`;
         break;
       case `fajni`:
-        message = `<img class="fit-fajni" src="./src/fajni.png">`;
+        message = `<img class="fit-pic" src="./src/fajni.png">`;
         time = 4000;
         break;
       case `hinty`:
         let doubleLetters = false;
-        time = 5000;
+        let hintText = document.querySelector(`.hint`);
         let lettersSet = new Set(Array.from(...this.gameState.finalWord));
         if (lettersSet.size < 5) doubleLetters = true;
         message = `Definition: ${this.gameState.definition}<br> ${
@@ -348,7 +357,15 @@ class Model {
             ? `<br>There are repeating letters`
             : `<br>There are no repeating letters`
         }`;
+        hintText.innerHTML = message;
         this.gameState.usedHint = true;
+        break;
+      case `gojko`:
+        message = `<img class="fit-pic" src="./src/gojko.png">`;
+        time = 4000;
+        break;
+      case `niger`:
+        message = `The country, right?`;
         break;
 
       default:
