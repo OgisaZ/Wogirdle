@@ -98,7 +98,7 @@ body {
 }
 .keyboard {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   width: 20vw;
   text-align: center;
 }
