@@ -30,6 +30,7 @@ class Model {
       `hinty`,
       `gojko`,
       `niger`,
+      `tejce`,
     ],
     usedHint: false,
   };
@@ -366,6 +367,9 @@ class Model {
         break;
       case `niger`:
         message = `The country, right?`;
+        break;
+      case `tejce`:
+        message = `Volim te <3`;
         break;
 
       default:
