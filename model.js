@@ -504,7 +504,7 @@ class Model {
     try {
       modal.showModal();
       const word = await fetch(
-        `https://random-word-api.vercel.app/api?words=1&length=5`
+        `https://random-word-api.herokuapp.com/word?length=5`
       );
       const json = await word.json();
       this.gameState.finalWord = json;
